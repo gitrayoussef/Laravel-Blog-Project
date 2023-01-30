@@ -1,15 +1,15 @@
 @extends('layouts.app')
 @section('title', 'Create')
 @section('content')
-<form method="POST" action="/posts">
-    @csrf();
+<form method="POST" action="{{route('posts.store')}}">
+    @csrf
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Title</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <label for="title" class="form-label">Title</label>
+        <input type="text" class="form-control" id="title" name="title">
     </div>
     <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        <label for="description" class="form-label">Description</label>
+        <textarea class="form-control" id="description" rows="3" name="description"></textarea>
     </div>
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Post Creator</label>

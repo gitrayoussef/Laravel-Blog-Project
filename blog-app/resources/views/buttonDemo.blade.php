@@ -1,6 +1,6 @@
-@extends('layouts.app')
+{{-- @extends('layouts.app')
 @section('content')
-<x-button type='primary'>View</x-button>
-<x-button type='secondary'>Edit</x-button>
-<x-button type='danger'>Delete</x-button>
-@endsection
+    <x-button type='primary' :route='{{ $post }}'>View</x-button>
+    {{-- <x-button type='secondary' :route='{{ route('posts.edit', ['post' => $post]) }}'>Edit</x-button>
+    <x-button type='danger' :route='{{ route('posts.destroy', ['post' => $post]) }}'>Delete</x-button> --}}
+@endsection --}}

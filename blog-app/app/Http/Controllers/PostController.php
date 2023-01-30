@@ -2,57 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
-    function index()
+    public function index()
     {
-        $allPosts = [
-            [
-                "id" => 1,
-                "title" => "Learn PHP",
-                "posted by" => "Ahmed",
-                "created at" => "2018-4-10"
-            ],
-            [
-                "id" => 2,
-                "title" => "Solid Principles",
-                "posted by" => "Mohamed",
-                "created at" => "2018-4-12"
-            ],
-            [
-                "id" => 3,
-                "title" => "Design Patterns",
-                "posted by" => "Ali",
-                "created at" => "2018-4-13"
-            ]
-        ];
-
-        return view('posts.index', ["posts" => $allPosts,]);
+        $posts = Post::all();
+        return view('posts.index', ['posts' => $posts]);
     }
-    function create()
+    public function create()
     {
         return view('posts.create');
     }
-    function store()
+    public function store(Request $request)
     {
-        return 'Hello world';
+        $post = new Post;
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->save();
+        return redirect()
+            ->route('posts.index');
     }
-    function show($postId)
+    public function show(Post $post)
     {
-        dd($postId);
+        return view('posts.show', ["post" => $post]);
     }
-    function edit($postId)
+    public function edit(Post $post)
     {
-        return view('posts.edit', ["postId" => $postId,]);
+        return view('posts.edit', ["post" => $post]);
     }
-    function update($postId)
+    public function update(Request $request,Post $post)
     {
-        dd($postId);
+        $post->title = $request->title;
+        $post->description = $request->description;
+        $post->save();
+        return redirect()
+            ->route('posts.show',[$post]);
     }
-        function destroy($postId)
+    public function destroy(Post $post)
     {
-        dd($postId);
+        return redirect()
+            ->route('posts.index');
     }
 }
