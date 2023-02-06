@@ -21,11 +21,13 @@
             <label for="images">Choose file to upload</label>
             <input type="file" id="image" name="image" accept=".jpg, .png" />
         </div>
-
-
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" rows="3" name="description">{{ old('description') }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="tags" class="form-label">Tags (Seperate each tag by , )</label>
+            <input type="text" class="form-control" id="tags" name="tags">
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Post Creator</label>

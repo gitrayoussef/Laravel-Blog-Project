@@ -7,7 +7,6 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 
@@ -36,6 +35,8 @@ class PostController extends Controller
                 'user_id' => $validated['postCreator'],
             ]
         );
+        $tags = explode(',', $validated['tags']);
+        $post->attachTags($tags);
         $validated['image']->storeAs('images', $post->id, 'public');
         return redirect()
             ->route('posts.show', ['post' => $post]);
@@ -47,16 +48,21 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $users = User::all();
-        return view('posts.edit', ["post" => $post, 'users' => $users]);
+        $tags = $post->tags->pluck('name');
+        foreach ($tags as $key => $value) {
+            $results[] = $value;
+        }
+        $tags = implode(',', $results);
+        return view('posts.edit', ["post" => $post, 'users' => $users, 'tags' => $tags]);
     }
     public function update(UpdatePostRequest $request, Post $post)
     {
         $validated = $request->validated();
-        Validator::make( $validated , [
+        Validator::make($validated, [
             'title' => [Rule::unique('users')->ignore($post)]
         ]);
         Storage::disk('public')->delete('images/' . $post->id);
-        $validated['image']->storeAs('images',$post->id,'public');
+        $validated['image']->storeAs('images', $post->id, 'public');
         $post->update(
             [
 
@@ -65,7 +71,8 @@ class PostController extends Controller
                 'user_id' => $validated['postCreator'],
             ]
         );
-
+        $tags = explode(',', $validated['tags']);
+        $post->attachTags($tags);
         return redirect()
             ->route('posts.show', [$post]);
     }

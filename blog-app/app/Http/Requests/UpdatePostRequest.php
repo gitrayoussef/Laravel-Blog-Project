@@ -29,6 +29,7 @@ class UpdatePostRequest extends FormRequest
             'description' => ['required', 'min:5'],
             'postCreator' => ['exists:users,id'],
             'image' => ['required', 'mimes:jpg,png'],
+            'tags' => ['']
         ];
     }
     public function messages()

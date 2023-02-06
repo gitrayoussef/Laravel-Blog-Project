@@ -26,6 +26,10 @@
             <textarea class="form-control" id="description" rows="3" name="description">{{ old('description', $post->description) }}</textarea>
         </div>
         <div class="mb-3">
+            <label for="tags" class="form-label">Tags (Seperate each tag by , )</label>
+            <input type="text" class="form-control" id="tags" name="tags" value="{{ old('tags',$tags) }}"
+        </div>
+        <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Post Creator</label>
             <select class="form-select" aria-label="Default select example" name="postCreator">
                 @foreach ($users as $user)
