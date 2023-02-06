@@ -43,16 +43,31 @@ class PostController extends Controller
     }
     public function show(Post $post)
     {
-        return view('posts.show', ["post" => $post, 'comments' => $post->comments]);
+        $tags = $post->tags;
+        if (!$tags->isEmpty()) {
+            $tags = $post->tags->pluck('name');
+            foreach ($tags as $key => $value) {
+                $results[] = $value;
+            }
+            $tags = implode(',', $results);
+        } else {
+            $tags = 'No tags was assigned to this post';
+        }
+        return view('posts.show', ["post" => $post, 'comments' => $post->comments, 'tags' => $tags]);
     }
     public function edit(Post $post)
     {
         $users = User::all();
-        $tags = $post->tags->pluck('name');
-        foreach ($tags as $key => $value) {
-            $results[] = $value;
+        $tags = $post->tags;
+        if (!$tags->isEmpty()) {
+            $tags = $post->tags->pluck('name');
+            foreach ($tags as $key => $value) {
+                $results[] = $value;
+            }
+            $tags = implode(',', $results);
+        } else {
+            $tags = '';
         }
-        $tags = implode(',', $results);
         return view('posts.edit', ["post" => $post, 'users' => $users, 'tags' => $tags]);
     }
     public function update(UpdatePostRequest $request, Post $post)

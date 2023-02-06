@@ -10,8 +10,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Image</th>
                 <th scope="col">Title</th>
-                <th scope="col" >Slug</th>
-                <th scope="col" >Posted By</th>
+                <th scope="col">Slug</th>
+                <th scope="col">Posted By</th>
                 <th scope="col">Created At</th>
                 <th scope="col" class="w-25">Actions</th>
             </tr>
