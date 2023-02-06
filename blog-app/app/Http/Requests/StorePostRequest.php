@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\onlyThreePostsPerUser;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Validator;
@@ -28,7 +29,7 @@ class StorePostRequest extends FormRequest
         return [
             'title' => ['required', 'min:3' , 'unique:posts'],
             'description' => ['required', 'min:5'],
-            'postCreator' => ['exists:users,id'],
+            'postCreator' => ['exists:users,id' , new onlyThreePostsPerUser],
             'image' => ['required','mimes:jpg,png']
         ];
     }
