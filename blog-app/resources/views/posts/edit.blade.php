@@ -1,12 +1,25 @@
 @extends('layouts.app')
 @section('title', 'Edit')
 @section('content')
-    <form action="{{ route('posts.update', [$post]) }}" method="POST" class="mt-5">
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form action="{{ route('posts.update', [$post]) }}" method="POST" class="mt-5" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">
             <label for="title" class="form-label">Title</label>
             <input type="texr" class="form-control" id="title" value="{{ old('title', $post->title) }}" name="title">
+        </div>
+        <div class="mb-3">
+            <label for="images">Choose file to upload</label>
+            <input type="file" id="image" name="image" accept=".jpg, .png" />
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Description</label>

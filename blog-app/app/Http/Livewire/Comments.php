@@ -39,7 +39,6 @@ class Comments extends Component
     {
         $comment = Comment::find($id);
         $comment->delete();
-
     }
 
 

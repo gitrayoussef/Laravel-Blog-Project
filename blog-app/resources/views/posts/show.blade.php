@@ -6,9 +6,11 @@
             Post Info
         </div>
         <div class="card-body">
-            <h5 class="card-title">Title: <span class="fw-normal card-text">{{ $post->title }}</span></h5>
-            <h6 class="card-title">Description:</h6>
-            <span class="card-text">{{ $post->description }}</span>
+            @if (Storage::disk('public')->exists('images/'.$post->id))
+            <img src="{{asset('storage/images/'.$post->id)}}" class="card-img-top" style="max-height: 100px; max-width: 100px;" alt="..."> 
+            @endif
+            <h5 class="card-title">Title:  <span class="fw-normal card-text">{{ $post->title }}</span></h5>
+            <h6 class="card-title">Description:  <span class="fw-normal card-text">{{ $post->description }}</span></h6>
         </div>
     </div>
     <div class="card mt-3">
@@ -21,7 +23,7 @@
                     class="fw-normal card-text">{{ $post->user->email ?? 'admin@company.org' }}</span></h6>
             <h6 class="card-title">Created At: <span class="fw-normal card-text">
                     @if (!$post->user)
-                        {{ ' ' }}
+                        {{ 'Tue, Jan 31, 2023 12:46 PM' }}
                     @else
                         {{ $post->user->created_at->toDayDateTimeString() }}
                     @endif

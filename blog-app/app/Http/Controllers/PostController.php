@@ -2,18 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
-use Illuminate\Http\Request;
-use Illuminate\Http\RedirectResponse;
-use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
     public function index()
     {
         $posts = Post::withTrashed()->paginate(50);
+        // foreach($posts as $post) {
+        //     $post->touch();
+        // }
         return view('posts.index', ['posts' => $posts]);
     }
     public function create()
@@ -21,15 +26,17 @@ class PostController extends Controller
         $users = User::all();
         return view('posts.create', ['users' => $users]);
     }
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
+        $validated = $request->validated();
         $post = Post::create(
             [
-                'title' => $request->title,
-                'description' => $request->description,
-                'user_id' => $request->postCreator
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+                'user_id' => $validated['postCreator'],
             ]
         );
+        $validated['image']->storeAs('images', $post->id, 'public');
         return redirect()
             ->route('posts.show', ['post' => $post]);
     }
@@ -42,13 +49,20 @@ class PostController extends Controller
         $users = User::all();
         return view('posts.edit', ["post" => $post, 'users' => $users]);
     }
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
+        $validated = $request->validated();
+        Validator::make( $validated , [
+            'title' => [Rule::unique('users')->ignore($post)]
+        ]);
+        Storage::disk('public')->delete('images/' . $post->id);
+        $validated['image']->storeAs('images',$post->id,'public');
         $post->update(
             [
-                'title' => $request->title,
-                'description' => $request->description,
-                'user_id' => $request->postCreator
+
+                'title' => $validated['title'],
+                'description' => $validated['description'],
+                'user_id' => $validated['postCreator'],
             ]
         );
 
@@ -57,7 +71,9 @@ class PostController extends Controller
     }
     public function destroy($id)
     {
-        $post = Post::find($id)->deleteOrFail();
+        $post = Post::findorFail($id);
+        Storage::disk('public')->delete('images/' . $post->id);
+        $post->deleteOrFail();
         return redirect()
             ->route('posts.index');
     }
