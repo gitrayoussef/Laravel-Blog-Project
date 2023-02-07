@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Route;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,3 +44,14 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+
+ 
+Route::get('/auth/github/redirect', [LoginController::class, 'redirectGithub']);
+ 
+Route::get('/auth/github/callback', [LoginController::class, 'callbackGithub']);
+
+Route::get('/auth/google/redirect', [LoginController::class, 'redirectGoogle'])->name('goole.redirectGoogle');
+ 
+Route::get('/auth/google/callback', [LoginController::class, 'callbackGoogle'])->name('goole.callbackGoogle');

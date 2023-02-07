@@ -30,7 +30,7 @@ class StorePostRequest extends FormRequest
             'title' => ['required', 'min:3' , 'unique:posts'],
             'description' => ['required', 'min:5'],
             'postCreator' => ['exists:users,id' , new onlyThreePostsPerUser],
-            'image' => ['required','mimes:jpg,png'],
+            'image' => ['mimes:jpg,png'],
             'tags' => ['']
         ];
     }

@@ -35,8 +35,11 @@ class PostController extends Controller
                 'user_id' => $validated['postCreator'],
             ]
         );
-        $tags = explode(',', $validated['tags']);
-        $post->attachTags($tags);
+
+        if (!$validated['tags']) {
+            $tags = explode(',', $validated['tags']);
+            $post->attachTags($tags);
+        }
         $validated['image']->storeAs('images', $post->id, 'public');
         return redirect()
             ->route('posts.show', ['post' => $post]);
