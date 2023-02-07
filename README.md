@@ -60,3 +60,31 @@ Blog is a full stack web application used to show posts , create posts and retre
 ✔️View Ajax Button to posts page , that opens Bootstrap Modal, showing post info (title , escription , username, useremail)  using ajax request 
 
 ✔️  livewire to make your comments doesn’t refresh the page when making CRUD
+
+✔️  livewire to make your comments doesn’t refresh the page when making CRUD
+
+✔️ Each post have slug
+
+✔️ PruneOldPostsJob Queue Job when dispatched it deletes posts that are created from 2 years ago
+
+✔️ Using Task Scheduling to schedule PruneOldPostsJob to run daily at midnight
+
+✔️ Ability to upload image to post , and validated extensions are only (.jpg, .png) and using Storage to store and 
+show images also when  updating post remove the old image, and when deleting post remove the old image
+
+
+✔️ Make custom validation rule , that makes sure the user is only allowed to create 3 posts and if he exceeded this number we show a validation error message
+
+✔️ Using spatie package to add Tags to post , the user will enter comma separated tags 
+
+
+✔️  endpoints (api/posts GET , api/posts/{id} GET , api/posts POST) to get all posts and to get one post and to store a single post
+
+✔️ Add Authentication middleware to the Api endpoints using Scantum
+
+✔️ Eloquent Api Resource with pagination 
+
+✔️ Eager Loading  when getting all posts to include the user relation to enhance performance
+
+✔️Allow login with github & google and store user info for both providers
+
