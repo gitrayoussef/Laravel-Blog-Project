@@ -48,10 +48,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 
  
-Route::get('/auth/github/redirect', [LoginController::class, 'redirectGithub']);
+Route::get('/auth/github/redirect', [LoginController::class, 'redirectGithub'])->name('github.redirectGithub');
  
 Route::get('/auth/github/callback', [LoginController::class, 'callbackGithub']);
 
 Route::get('/auth/google/redirect', [LoginController::class, 'redirectGoogle'])->name('goole.redirectGoogle');
- 
-Route::get('/auth/google/callback', [LoginController::class, 'callbackGoogle'])->name('goole.callbackGoogle');
+
+Route::get('/auth/google/callback', [LoginController::class, 'callbackGoogle']);

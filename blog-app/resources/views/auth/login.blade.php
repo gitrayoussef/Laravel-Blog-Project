@@ -56,10 +56,10 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Login') }}
                                 </button>
-                                <a href="" class="btn btn-dark">
+                                <a href="{{route('github.redirectGithub')}}" class="btn btn-dark">
                                     Sign in with Github
                                 </a>
-                                <a href="" class="btn btn-danger">
+                                <a href="{{route('goole.redirectGoogle')}}" class="btn btn-danger">
                                     Sign in with Goggle
                                 </a>
 
